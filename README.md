@@ -28,11 +28,9 @@ Not very usefull yet ...
 
 Developed with "geany"
 
-Now with waf as build system
-  ./waf configure
-  ./waf
-  ./_build_/default/src/sloc
-
+Now with cmake as build system see INSTALL,
+to fit in elementary 
+ 
 logo.png is build with gimp skript
 
 git as version controll

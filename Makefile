@@ -1,9 +1,9 @@
 OS = LINUX
-PKGS = 	--pkg gee-1.0 --pkg gtk+-3.0 
+PKGS = 	--pkg gee-1.0 --pkg gtk+-3.0 --pkg granite
 		\
 		\
 # Pakete
-PACKAGES       =  gee-1.0  gtk+-3.0  gio-2.0 
+PACKAGES       =  gee-1.0  gtk+-3.0 granite
 PKG_FLAGS             = $(PACKAGES:%=--pkg %)
 # Version des Pakets
 VERSION        = 0.01
@@ -21,7 +21,7 @@ LIBS = \
 FLAGS = -g
 FILES = \
 	 src/main.vala \
-	 src/aboutdialog.vala \
+	 src/Window.vala \
 	 src/project.vala \
 	 src/sloc.vala \
 	 
