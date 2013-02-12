@@ -31,7 +31,7 @@ Developed with "geany"
 Now with cmake as build system see INSTALL,
 to fit in elementary 
  
-logo.png is build with gimp skript
+please do not install yet
 
 git as version controll
 
