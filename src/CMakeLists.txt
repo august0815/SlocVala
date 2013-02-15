@@ -8,7 +8,7 @@ include(ValaPrecompile)
 
 # pkgconfig, real C code
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 gee-1.0 granite)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 gee-1.0 gio-2.0 granite)
 set(CFLAGS
 	${DEPS_CFLAGS} ${DEPS_CFLAGS_OTHER}
 )
@@ -21,7 +21,6 @@ link_directories(${LIB_PATHS})
 add_definitions(${CFLAGS})
 vala_precompile(VALA_C 
     main.vala
-    project.vala
     Window.vala
 	sloc.vala
 PACKAGES

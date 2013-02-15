@@ -24,11 +24,16 @@ public ArrayList<string> filename = new ArrayList<string>() ;
 public ArrayList<int> slocsum = new ArrayList<int>();
 public ArrayList<string> typ = new ArrayList<string>();
 public int gesamtsloc{get;set;}
-public int filecount{get;set;}
 
 	public Sloc(){
 	gesamtsloc=0;
 	}
+	public void neusloc() {
+         filename.clear();
+		 slocsum .clear();
+		 typ.clear();
+		 gesamtsloc=0;
+    }
 	public void addsloc(string filetocount,string dir){
 	int sloc=count(filetocount,dir);
 	if ("." in filetocount){
@@ -108,11 +113,9 @@ public int filecount{get;set;}
      
 	return ssloc;
 	}
-	public void addfilecount(int filecount){
-		this.filecount=filecount;
-		}
 	public string getText(){
 		string text = "";
+		int filecount=filename.size;
 	for (int i=0;i<filecount;i ++){
 			text += "LIST FILENAME "+filename[i]+" =>  TYP  : "+typ[i]+ "  Sloc  = "+slocsum[i].to_string()+"\n";
 			}

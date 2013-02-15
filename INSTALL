@@ -1,0 +1,8 @@
+To compile it:
+mkdir build
+cd build
+cmake ..
+make -j3
+
+To install it:
+make install

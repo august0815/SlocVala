@@ -19,7 +19,12 @@ using Gee;
 	{
 	public Gtk.Box vbox;	
     private TextView text_view;
-		
+	public string text="";	
+	private bool welcom=true;
+	public ArrayList<string> list;
+	public Sloc projekt;
+	public int filecount =0 ;
+	
 		Granite.Widgets.Welcome welcome;
 		
 		// Toolbar elements
@@ -34,6 +39,13 @@ using Gee;
 		 * Creates a  window.
 		 */
 		public ProjektWindow (string? path = "", Granite.Application app) {
+				projekt=new Sloc();
+				list = new ArrayList<string> ();
+				list.add (".vala");
+				//list.add (".c");
+				//list.add ("Makefile");
+				//list.add ("cmake");
+				list.add ("wscript");
 			set_default_size (800, 600);
 			menu = new Gtk.Menu();
 			welcome = new Granite.Widgets.Welcome("Count sorce code of lines in VALA-codefiles\n  Start: select an directory .", "Open ...");
@@ -54,8 +66,9 @@ using Gee;
 			
 			// Toolbar
 			toolbar.get_style_context().add_class ("primary-toolbar");
-			
+			ToolButton menue_open =new ToolButton(new Image.from_stock(Stock.OPEN,IconSize.BUTTON),"");
 			toolbar.insert(appMenu_item, -1);
+			toolbar.insert(menue_open, -1);
 			// Text
 		    this.text_view = new TextView ();
 			this.text_view.editable = false;
@@ -66,7 +79,6 @@ using Gee;
 			add (vbox);
 			vbox.pack_start (toolbar, false, false);
 			vbox.pack_start (welcome, true, true);
-			//vbox.pack_start (scroll,true,true);
 			vbox.show_all();
 			toolbar.show_all();
 
@@ -75,7 +87,7 @@ using Gee;
 			welcome.show_all();
 			// Connections
 			welcome.activated.connect(on_welcome_activated);
-	
+			menue_open.clicked.connect (on_opendir_clicked);
 		}
 
 		/**
@@ -97,18 +109,56 @@ using Gee;
 		}
 
 		private void open_dir (string filename) {
-		string text =Project.project(filename);
-		vbox.remove(welcome);
+		
+		File file = File.new_for_path(filename);
+
+			list_children(file, new Cancellable (),filename+"/");
+			if (welcom){
+			welcom=false;
+			vbox.remove(welcome);
 			var scroll = new ScrolledWindow (null, null);
 			scroll.set_policy (PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
 			scroll.add (this.text_view);
+			vbox.pack_start (scroll,true,true);
+			scroll.show_all();}
+			report();
+		    
+		
 
-		vbox.pack_start (scroll,true,true);
-					scroll.show_all();
-
-		this.text_view.buffer.text =  text;
 		}
+	private void list_children (File file, Cancellable? cancellable = null,string filename ) throws Error {
+		FileEnumerator enumerator = file.enumerate_children ("standard::*",FileQueryInfoFlags.NOFOLLOW_SYMLINKS,cancellable);
+		int gesamtsloc=0;
+        
+		FileInfo info = null;
+		while (cancellable.is_cancelled () == false && ((info = enumerator.next_file (cancellable)) != null)) {
+			if ((info.get_file_type () == FileType.DIRECTORY)&&(!(info.get_is_hidden ()))) {
+				File subdir = file.resolve_relative_path (info.get_name ());
+				string filenam=filename+info.get_name()+"/";
+				list_children (subdir,  cancellable,filenam);
+			} else {
+				if(!(info.get_is_hidden ())){
+					foreach (string i in list) {
+						if (i in info.get_name()){
+							projekt.addsloc(info.get_name (),filename+"/");
+							gesamtsloc=projekt.gesamtsloc;
+							filecount++;
+								}
+							}
+						}
+				}
+			}
+			
+	if (cancellable.is_cancelled ()) {
+		throw new IOError.CANCELLED ("Operation was cancelled");
+	}
+}
 
+
+	public void report(){
+			text=projekt.getText();
+			this.text_view.buffer.text =  text;
+			projekt.neusloc();}
 //		private void close() {
 //			hide();
 //			Gtk.main_quit();
