@@ -1,0 +1,12 @@
+[94m[_LOG_LEVEL_INFO 12:55:56.742187][0m Application.vala:75: SlocVala version: (null)
+[94m[_LOG_LEVEL_INFO 12:55:56.742259][0m Application.vala:77: Kernel version: 3.2.0-37-generic
+LIST FILENAME test.vala =>  TYP  : test.vala  Sloc  = 35
+
+Anteil LogicalLine = 35
+Anteil KommentarLine = 22
+Anteil LEERLine = 7
+Anteil AlleLine = 64
+
+ SLOC of Project  => 35
+
+Total Estimated Cost to Develop =955.00298983779726

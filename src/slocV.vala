@@ -25,19 +25,28 @@ public ArrayList<int> slocsum = new ArrayList<int>();
 public ArrayList<string> typ = new ArrayList<string>();
 public int gesamtsloc{get;set;}
 public int lloc{get;set;}
+public int leer{get;set;}
+public int all{get;set;}
 
 	public SlocV(){
 	gesamtsloc=0;
+	leer=0;
+	lloc=0;
+	all=0;
 	}
 	public override void neusloc() {
          filename.clear();
 		 slocsum .clear();
 		 typ.clear();
 		 lloc=0;
+		 leer=0;
+		 all=0;
 		 gesamtsloc=0;
     }
 	public override void addsloc(string filetocount,string dir){
-	int sloc=count(filetocount,dir);
+	int alt=all-leer-lloc;
+	int neu=all-leer+count(filetocount,dir);
+	int sloc=neu-alt;
 	if ("." in filetocount){
 	typ.add(filetocount);
 		}
@@ -62,6 +71,18 @@ public int lloc{get;set;}
 	int ssloc=0;
 	string help;
 	string workstring="";	
+	 //  Zähle LeerZeilen
+      var file = File.new_for_path (d+filename);  
+      var ins = new DataInputStream (file.read (null));
+      string line;
+      // Read lines until end of file (null) is reached
+      while ((line = ins.read_line (null, null)) != null) {
+			  if (line==""){
+			     leer++;
+			   }
+			   all ++;
+	}
+	
    	try { 
       filename=d+filename;
       FileUtils.get_contents (filename,out content);
@@ -73,6 +94,7 @@ public int lloc{get;set;}
 	* TODO: Typ abhängines Zählen !!  
     * 
     */
+    
     for (weak string s = content; s.get_char ()!=0 ; s = s.next_char ()) {
       unichar c = s.get_char ();
      	if(c=='/') {
@@ -100,9 +122,12 @@ public int lloc{get;set;}
 			    }
 		  	}
 		  	else  { 
+			//Ignoriert einzelne '}' , ')' und TAB am anfang der Zeile
+			if ((c!='}')&&(c!=')')&&(c!='	')){
 		  	  help = c.to_string();
 		  	  
 		  	  workstring += help;
+				}
 		    }
 	    }
 	    	 
@@ -111,22 +136,26 @@ public int lloc{get;set;}
        * 
        */
       int lsloc=0;
-      ssloc +=in_stream.length;
+      ssloc =in_stream.length-1;
       for (int ii=0; ii< ssloc; ii++)
 		{
 		  if (!(in_stream[ii]=="")){lsloc ++;}
 		}
 		lloc +=lsloc;
-		return ssloc;
+		return lsloc;
 	}
 	public override string getText(){
 		string text = "";
 		int filecount=filename.size;
+		int rem=all-leer-lloc;
 	for (int i=0;i<filecount;i ++){
 			text += "LIST FILENAME "+filename[i]+" =>  TYP  : "+typ[i]+ "  Sloc  = "+slocsum[i].to_string()+"\n";
 			}
 		text +="\nAnteil LogicalLine = "+lloc.to_string();
-		text += claculate(gesamtsloc);
+		text +="\nAnteil KommentarLine = "+rem.to_string();
+		text +="\nAnteil LEERLine = "+leer.to_string();
+		text +="\nAnteil AlleLine = "+all.to_string();
+		text += claculate(lloc);
 		return text;
 	}
 

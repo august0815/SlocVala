@@ -47,7 +47,7 @@ using Gee;
 				//list.add (".h");
 				//list.add ("Makefile");
 				//list.add ("cmake");
-				list.add ("wscript");
+				//list.add ("wscript");
 			set_default_size (800, 600);
 			menu = new Gtk.Menu();
 			welcome = new Granite.Widgets.Welcome("Count sorce code of lines in VALA-codefiles\n  Start: select an directory .", "Open ...");
@@ -159,6 +159,7 @@ using Gee;
 
 	public void report(){
 			text=projekt.getText();
+			print (text);
 			this.text_view.buffer.text =  text;
 			projekt.neusloc();}
 //		private void close() {

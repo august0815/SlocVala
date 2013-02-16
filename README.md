@@ -31,8 +31,14 @@ Developed with "geany"
 Now with cmake as build system see INSTALL,
 to fit in elementary 
  
+
 please do not install yet
 
 git as version controll
+
+TEST
+====
+In this directory are some results of sloccount,tally and SlocVala ,the result´s are near sloccount, 
+tally uses other rules to generate LLOC.
 
 many TODO´s
