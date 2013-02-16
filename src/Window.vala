@@ -22,7 +22,7 @@ using Gee;
 	public string text="";	
 	private bool welcom=true;
 	public ArrayList<string> list;
-	public Sloc projekt;
+	public SlocV projekt;
 	public int filecount =0 ;
 	
 		Granite.Widgets.Welcome welcome;
@@ -39,10 +39,12 @@ using Gee;
 		 * Creates a  window.
 		 */
 		public ProjektWindow (string? path = "", Granite.Application app) {
-				projekt=new Sloc();
+				projekt=new SlocV();
 				list = new ArrayList<string> ();
 				list.add (".vala");
 				//list.add (".c");
+				//list.add (".cpp");
+				//list.add (".h");
 				//list.add ("Makefile");
 				//list.add ("cmake");
 				list.add ("wscript");

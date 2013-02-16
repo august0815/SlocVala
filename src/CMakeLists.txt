@@ -22,7 +22,8 @@ add_definitions(${CFLAGS})
 vala_precompile(VALA_C 
     main.vala
     Window.vala
-	sloc.vala
+    SLOC.vala
+	slocV.vala
 PACKAGES
     gtk+-3.0
     

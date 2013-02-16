@@ -14,27 +14,29 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 */
 using GLib;
 using Gee;
-
+using SLOCC;
 /**
  * TODO: Add documentation here.
  */
-public class Sloc : Object
+public class SlocV : SLOC
 {
 public ArrayList<string> filename = new ArrayList<string>() ;
 public ArrayList<int> slocsum = new ArrayList<int>();
 public ArrayList<string> typ = new ArrayList<string>();
 public int gesamtsloc{get;set;}
+public int lloc{get;set;}
 
-	public Sloc(){
+	public SlocV(){
 	gesamtsloc=0;
 	}
-	public void neusloc() {
+	public override void neusloc() {
          filename.clear();
 		 slocsum .clear();
 		 typ.clear();
+		 lloc=0;
 		 gesamtsloc=0;
     }
-	public void addsloc(string filetocount,string dir){
+	public override void addsloc(string filetocount,string dir){
 	int sloc=count(filetocount,dir);
 	if ("." in filetocount){
 	typ.add(filetocount);
@@ -49,10 +51,10 @@ public int gesamtsloc{get;set;}
 	}
 	
 	
-	private int count(string filetocount,string dir){
+	protected override int count(string filetocount,string dir){
 	 /** 
 	 *  simples Zählen
-	 * nur Kommentare in der Form = "//" und "/" werden ignoriert
+	 * nur Kommentare in der Form = "//" und "/*" werden ignoriert
 	 */
 	string filename = filetocount;
 	string d=dir;
@@ -71,9 +73,9 @@ public int gesamtsloc{get;set;}
 	* TODO: Typ abhängines Zählen !!  
     * 
     */
-      for (weak string s = content; s.get_char ()!=0 ; s = s.next_char ()) {
+    for (weak string s = content; s.get_char ()!=0 ; s = s.next_char ()) {
       unichar c = s.get_char ();
-    	if(c=='/') {
+     	if(c=='/') {
 			  s = s.next_char (); 
 			  c = s.get_char ();
 			  if(c=='/') {
@@ -106,24 +108,29 @@ public int gesamtsloc{get;set;}
 	    	 
       string[]  in_stream = workstring.split("\n");
       /** @TODO: 
-       * Prüfen ob I.O.
+       * 
        */
-      ssloc=in_stream.length;
-      
-     
-	return ssloc;
+      int lsloc=0;
+      ssloc +=in_stream.length;
+      for (int ii=0; ii< ssloc; ii++)
+		{
+		  if (!(in_stream[ii]=="")){lsloc ++;}
+		}
+		lloc +=lsloc;
+		return ssloc;
 	}
-	public string getText(){
+	public override string getText(){
 		string text = "";
 		int filecount=filename.size;
 	for (int i=0;i<filecount;i ++){
 			text += "LIST FILENAME "+filename[i]+" =>  TYP  : "+typ[i]+ "  Sloc  = "+slocsum[i].to_string()+"\n";
 			}
+		text +="\nAnteil LogicalLine = "+lloc.to_string();
 		text += claculate(gesamtsloc);
 		return text;
 	}
 
-	 private string claculate(int summe){
+	 protected override string claculate(int summe){
 	// This is based on get_sloc.perl of SLOCCount
 	//  http://www.dwheeler.com. by David A. Wheeler 
 	/* Default values for the effort estimation model; the model is
