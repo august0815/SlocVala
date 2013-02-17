@@ -31,6 +31,7 @@ using Gee;
 	private bool html=false;
 	private bool pdf=false;
 	private bool xml=true;
+	private string last_filename="";
 		
 		Granite.Widgets.Welcome welcome;
 		
@@ -93,8 +94,12 @@ using Gee;
 			// Toolbar
 			toolbar.get_style_context().add_class ("primary-toolbar");
 			ToolButton menue_open =new ToolButton(new Image.from_stock(Stock.OPEN,IconSize.BUTTON),"");
+			ToolButton print_open =new ToolButton(new Image.from_stock(Stock.PRINT,IconSize.BUTTON),"");
+			ToolButton refresh_open =new ToolButton(new Image.from_stock(Stock.REFRESH,IconSize.BUTTON),"");
 			toolbar.insert(appMenu_item, -1);
 			toolbar.insert(menue_open, -1);
+			toolbar.insert(refresh_open, -1);
+			toolbar.insert(print_open, -1);
 			// Text
 		    this.text_view = new TextView ();
 			this.text_view.editable = false;
@@ -114,6 +119,7 @@ using Gee;
 			// Connections
 			welcome.activated.connect(on_welcome_activated);
 			menue_open.clicked.connect (on_opendir_clicked);
+			refresh_open.clicked.connect (on_refresh_clicked);
 			destroy.connect(close);
 		}
 
@@ -138,7 +144,7 @@ using Gee;
 		private void open_dir (string filename) {
 		
 		File file = File.new_for_path(filename);
-
+			last_filename=filename;
 			list_children(file, new Cancellable (),filename+"/");
 			if (welcom){
 			welcom=false;
@@ -152,6 +158,15 @@ using Gee;
 		    
 		
 
+		}
+		
+	private void on_refresh_clicked () {
+		if (last_filename!=""){
+			File file = File.new_for_path(last_filename);
+
+			list_children(file, new Cancellable (),last_filename+"/");
+			report();
+			}
 		}
 	private void list_children (File file, Cancellable? cancellable = null,string filename ) throws Error {
 		FileEnumerator enumerator = file.enumerate_children ("standard::*",FileQueryInfoFlags.NOFOLLOW_SYMLINKS,cancellable);
@@ -183,6 +198,10 @@ using Gee;
 							projekt_make.addsloc(info.get_name (),filename+"/");
 							gesamtsloc=projekt_make.gesamtsloc;
 								}
+						if ((wscript)&&(i==info.get_name())){
+							projekt_make.addsloc(info.get_name (),filename+"/");
+							gesamtsloc=projekt_make.gesamtsloc;
+								}
 							}
 						}
 				}
@@ -211,6 +230,12 @@ using Gee;
 		
 		}
 	private void on_wscript(){
+		if (wscript){
+		list.remove ("wscript");
+		wscript=false;}
+		else{
+			list.add ("wscript");
+			wscript=true;}
 		}
 	private void on_simple(){
 		}
