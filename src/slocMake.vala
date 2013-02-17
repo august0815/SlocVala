@@ -98,32 +98,18 @@ public int all{get;set;}
     for (weak string s = content; s.get_char ()!=0 ; s = s.next_char ()) {
       unichar c = s.get_char ();
      	if(c=='#') {
-			  s = s.next_char (); 
-			  c = s.get_char ();
-			  if(c=='/') {
-			  	workstring += "\n";
+			  //s = s.next_char (); 
+			  //c = s.get_char ();
+			  workstring += "\n";
 			  		while (!(c=='\n')){
 				  	  s = s.next_char (); 
 				  	  c = s.get_char ();
 				  	}
-			  	}	
-			  if(c=='*') {
-			  	while(true) {	
-			  		s = s.next_char (); 
-			  		c = s.get_char ();
-			  		if(c=='*') {
-				  		s = s.next_char (); 
-				  		c = s.get_char ();
-					  	if(c=='/') {
-					  		break;
-					    	}
-				  	  }
-			  	  }
-			    }
+			  	
 		  	}
 		  	else  { 
 			//Ignoriert einzelne '}' , ')' und TAB am anfang der Zeile
-			if ((c!='}')&&(c!=')')&&(c!='	')){
+			if (c!='	'){
 		  	  help = c.to_string();
 		  	  
 		  	  workstring += help;
