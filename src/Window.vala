@@ -117,6 +117,7 @@ using Gee;
 			// Connections
 			welcome.activated.connect(on_welcome_activated);
 			menue_open.clicked.connect (on_opendir_clicked);
+			destroy.connect(close);
 		}
 
 		/**
@@ -208,9 +209,9 @@ using Gee;
 			print (text);
 			this.text_view.buffer.text =  text;
 			projekt.neusloc();}
-//		private void close() {
-//			hide();
-//			Gtk.main_quit();
-//		}		
+		private void close() {
+			hide();
+			Gtk.main_quit();
+		}		
 	}
 
