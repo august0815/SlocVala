@@ -24,7 +24,7 @@ Compiling
 =========
 Based on "SLOCCount by David A. Wheeler"
 
-Not very usefull yet ...
+Maybe some bugs , (calculating COCOMO model ??)
 
 Developed with "geany"
 
@@ -41,4 +41,12 @@ TEST
 In this directory are some results of sloccount,tally and SlocVala ,the result´s are near sloccount, 
 tally uses other rules to generate LLOC.
 
-many TODO´s
+USE
+===
+select dirictory ;
+The report is dispayed in termial and window, 
+you can add makfile cmake and wscript option to projekt report, simply press refresh button to se changes.
+
+at moment no print.
+
+select report output  . The file is saves in project directory.
