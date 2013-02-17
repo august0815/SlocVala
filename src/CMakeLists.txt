@@ -24,6 +24,7 @@ vala_precompile(VALA_C
     Window.vala
     SLOC.vala
 	slocV.vala
+	slocMake.vala
 PACKAGES
     gtk+-3.0
     
