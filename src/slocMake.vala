@@ -20,6 +20,7 @@ using SLOCC;
  */
 public class SlocMake : SLOC
 {
+	
 public ArrayList<string> filename = new ArrayList<string>() ;
 public ArrayList<int> slocsum = new ArrayList<int>();
 public ArrayList<string> typ = new ArrayList<string>();
