@@ -18,11 +18,10 @@ namespace SLOCC{
 /**
  * Interrface.
  */ 
-public abstract class SLOC : Object
+public abstract class REPORT : Object
 {
-	
-	public abstract void neusloc();
-	public abstract void addsloc(string filetocount,string dir);
-	protected abstract int count(string filetocount,string dir);
+	public abstract string getText(SlocV projektV,SlocMake projektM,bool make);
+
+	protected abstract string claculate(int summe,int filecount);
 	}
 }

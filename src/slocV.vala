@@ -23,6 +23,7 @@ public class SlocV : SLOC
 public ArrayList<string> filename = new ArrayList<string>() ;
 public ArrayList<int> slocsum = new ArrayList<int>();
 public ArrayList<string> typ = new ArrayList<string>();
+public ArrayList<string> dir = new ArrayList<string>();
 public int gesamtsloc{get;set;}
 public int lloc{get;set;}
 public int leer{get;set;}
@@ -44,19 +45,29 @@ public int all{get;set;}
 		 gesamtsloc=0;
     }
 	public override void addsloc(string filetocount,string dir){
-	int alt=all-leer-lloc;
-	int neu=all-leer+count(filetocount,dir);
-	int sloc=neu-alt;
-	if ("." in filetocount){
-	typ.add(filetocount);
+	bool add=true;	
+	int i=0;
+	foreach (string s in filename){
+		if ((s==filetocount)&&(dir==this.dir[i])){
+			add=false;}
+		i++;
+		}
+	if (add){			
+		int alt=all-leer-lloc;
+		int neu=all-leer+count(filetocount,dir);
+		int sloc=neu-alt;
+		if ("." in filetocount){
+			string[] type=filetocount.split(".");
+			typ.add(type[1]);
 		}
 		else {
-	string[] type=filetocount.split(".");
-	typ.add(type[1]);
-		}
-	filename.add(filetocount);
-	slocsum.add(sloc);
-	gesamtsloc +=sloc;
+			typ.add(filetocount);
+			}
+		filename.add(filetocount);
+		slocsum.add(sloc);
+		gesamtsloc +=sloc;
+		this.dir.add(dir);
+	  }
 	}
 	
 	
@@ -144,86 +155,6 @@ public int all{get;set;}
 		lloc +=lsloc;
 		return lsloc;
 	}
-	public override string getText(){
-		string text = "";
-		int filecount=filename.size;
-		int rem=all-leer-lloc;
-	for (int i=0;i<filecount;i ++){
-			text += "LIST FILENAME "+filename[i]+" =>  TYP  : "+typ[i]+ "  Sloc  = "+slocsum[i].to_string()+"\n";
-			}
-		text +="\nAnteil LogicalLine = "+lloc.to_string();
-		text +="\nAnteil KommentarLine = "+rem.to_string();
-		text +="\nAnteil LEERLine = "+leer.to_string();
-		text +="\nAnteil AlleLine = "+all.to_string();
-		text +="\n\n------------------------------------------------------------------\n";
-		text += claculate(lloc);
-		return text;
-	}
 
-	 protected override string claculate(int summe){
-	/** This is based on get_sloc.perl of SLOCCount
-	*  http://www.dwheeler.com. by David A. Wheeler 
-	* Default values for the effort estimation model; the model is
-    * effort = ($effort_factor * KiloSLOC) ** $effort_exponent.
-    * The following numbers are for basic COCOMO: 
-    * If ther were any errory please reoprt.
-    */
-    double effort_factor =  2.40;
-    double effort_exponent =  1.05;
-    string effort_estimation_message = "Basic COCOMO model,";
-
-    double schedule_factor =  2.5;
-    double schedule_exponent =  0.38;
-    string schedule_estimation_message = "Basic COCOMO model,";
-    /** Average Salary / year.
-    * Source :http://www1.salary.com/Programmer-I-Salary.html
-    * 
-	*The median expected salary for a typical Programmer II  in the United States is $67,219.
-	*/
-    double person_cost = 67219;
-
-    /** Overhead; the person cost is multiplied by this value to determine
-    * true annual costs.
-    */
-    double overhead = 2.4;
-    string text="";
-    text +="\n\n SLOC of Project  => " + summe.to_string()+"\n";
-            /**
-             *  Given the SLOC, reply an estimate of the number of person-months
-			 * needed to develop it traditionally.
-             * public double pow (double x, double y) is x^y
-             */ 
-            double tmp =summe/1000.0;
-            double grand_total_effort=(effort_factor*(Math.pow(tmp,effort_exponent)));
-			double grand_total_effort1=grand_total_effort/12;
-			text +="\nEstimated Development Effort in Person-Years (Person-Months)  =  "+"%10.2f".printf(grand_total_effort)+"("+"%10.2f".printf(grand_total_effort1)+")\n"; 
-            text +="(Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))\n";
-            double schadule=(effort_factor*(Math.pow(grand_total_effort,schedule_exponent)));
-            double schadule1=schadule/12;
-            text +="Schedule Estimate, Years (Months) =  "+"%10.2f".printf(schadule)+"("+"%10.2f".printf(schadule1)+")\n";
-            text +="(Basic COCOMO model, Months = 2.5 * (person-months**0.38))";
-            /**
-             *  Given the person-months, reply an estimate of the number of months
-             * needed to develop it traditionally.
-             */
-            double ava=grand_total_effort1/schadule1;
-			text += "\nEstimated Average Number of Developers (Effort/Schedule)  = " +"%10.2f".printf(schadule)+"\n";
-			double value1 = (grand_total_effort / 12.0) * person_cost * overhead;
-            text +="\nTotal Estimated Cost to Develop ="+"%10.2f".printf(value1);
-            text +="\n (average salary = $"+person_cost.to_string()+"/year, overhead ="+"%2.2f".printf(overhead);
-            
-            int filecount=filename.size;
-			text +="\n Total Number of Files = "+filecount.to_string()+"\n";
-			text +="\n\n------------------------------------------------------------------\n";
-			text +="SlocVala, Copyright (c) 2013 Mario Marcec <mario.marce42@googlmail.com>\n";
-			text +="SlocVala is Open Source Software/Free Software, licensed under the GNU GPL.\n";
-			text +="SlocVala comes with ABSOLUTELY NO WARRANTY, and you are welcome to\n";
-			text += "redistribute it under certain conditions as specified by the GNU GPL license;\n";
-			text +="see the documentation for details.\n";
-			text +="Please credit this data as \"generated using  Mario Marcec´s 'SlocVala'.\"\n";
-             /** @TODO Ausgabe über Interface Report 
-             */
-              
-         return text  ;
-		}
+	
 }

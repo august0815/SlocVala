@@ -25,6 +25,9 @@ vala_precompile(VALA_C
     SLOC.vala
 	slocV.vala
 	slocMake.vala
+	REPORT.vala
+	reportSimple.vala
+	
 PACKAGES
     gtk+-3.0
     
