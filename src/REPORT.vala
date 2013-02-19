@@ -23,5 +23,7 @@ public abstract class REPORT : Object
 	public abstract string getText(SlocV projektV,SlocMake projektM,bool make);
 
 	protected abstract string claculate(int summe,int filecount);
+	public abstract void write(string path,string text);
+	
 	}
 }

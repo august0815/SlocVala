@@ -125,4 +125,16 @@ public class simpleReport : REPORT
               
          return text  ;
 		}
+	public override void write (string path,string text){
+
+	 var file = File.new_for_path ("SimpleReport.txt");
+      // delete if file already exists
+      if (file.query_exists ()) {
+          file.delete ();
+      }
+      // creating a file and a DataOutputStream to the file
+      var dos = new DataOutputStream (file.create (FileCreateFlags.REPLACE_DESTINATION));
+      
+		  	  dos.put_string(text);
+     }
 }
