@@ -6,7 +6,7 @@ PKGS = 	--pkg gee-1.0 --pkg gtk+-3.0 --pkg granite
 PACKAGES       =  gee-1.0  gtk+-3.0 granite
 PKG_FLAGS             = $(PACKAGES:%=--pkg %)
 # Version des Pakets
-VERSION        = 0.01
+VERSION        = 0.1
 # Name des Pakets
 PKG_NAME       = SLOC
 GIR_NAME = $(PKG_NAME)-$(VERSION).gir
@@ -22,8 +22,11 @@ FLAGS = -g
 FILES = \
 	 src/main.vala \
 	 src/Window.vala \
-	 src/project.vala \
-	 src/sloc.vala \
+	 src/SLOC.vala \
+	 src/slocV.vala \
+	 src/slocMake.vala \
+	 src/REPORT.vala \
+	 src/reportSimple.vala \
 	 
 	 
 

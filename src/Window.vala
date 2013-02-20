@@ -17,20 +17,44 @@ using Gee;
 
 	class ProjektWindow : Gtk.Window
 	{
+	
 	public Gtk.Box vbox;	
+	/**
+	 * Creates a  window.
+	 */
     private TextView text_view;
-	//public string text="";	
+	/**
+	 * Use to switch welcomscreen
+	 */
 	private bool welcom=true;
+	/**
+	 * List of file extentions 
+	 */
 	public ArrayList<string> list;
+	/**
+	 * List of vala source files
+	 */
 	public SlocV projekt_vala;
+	/**
+	 * List of cmake wscript or makefiles 
+	 */
 	public  SlocMake projekt_make;
+	/**
+	 * Count Makefiles?
+	 */
 	private bool make=false;
 	private bool cmake=false;
 	private bool wscript=false;
+	/**
+	 * Output formats
+	 */
 	private bool simple=false;
 	private bool html=false;
 	private bool pdf=false;
 	private bool xml=true;
+	/**
+	 * Remember the last file
+	 */
 	private string last_filename="";
 		
 		Granite.Widgets.Welcome welcome;
@@ -130,6 +154,7 @@ using Gee;
 			if (index == 0)
 			{ on_opendir_clicked(); }
 		}
+		
 		private void on_opendir_clicked () {
         var file_chooser = new FileChooserDialog ("Sloc DIR", this,
                                       FileChooserAction.SELECT_FOLDER,
@@ -140,7 +165,9 @@ using Gee;
         }
         file_chooser.destroy ();
 		}
-
+		/**
+		*  Opendir
+		*/
 		private void open_dir (string filename) {
 		
 		File file = File.new_for_path(filename);
@@ -155,9 +182,6 @@ using Gee;
 			vbox.pack_start (scroll,true,true);
 			scroll.show_all();}
 			report();
-		    
-		
-
 		}
 		
 	private void on_refresh_clicked () {

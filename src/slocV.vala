@@ -16,17 +16,41 @@ using GLib;
 using Gee;
 using SLOCC;
 /**
- * TODO: Add documentation here.
+ * Main Count in Source´s
  */
 public class SlocV : SLOC
 {
+/**
+ * Name of file
+ */
 public ArrayList<string> filename = new ArrayList<string>() ;
+/**
+ * the code lines 
+ */
 public ArrayList<int> slocsum = new ArrayList<int>();
+/**
+ * extention of file
+ */
 public ArrayList<string> typ = new ArrayList<string>();
+/**
+ * Path to file
+ */
 public ArrayList<string> dir = new ArrayList<string>();
+/**
+ *  sum of all files
+ */
 public int gesamtsloc{get;set;}
+/**
+ * sum of logical lines
+ */
 public int lloc{get;set;}
+/**
+ * Blank Lines
+ */
 public int leer{get;set;}
+/**
+ * raw sum of lines
+ */
 public int all{get;set;}
 
 	public SlocV(){
