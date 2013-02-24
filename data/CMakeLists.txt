@@ -1,1 +1,1 @@
-# install (FILES projekt.desktop DESTINATION share/applications)
+install (FILES slocvala.desktop DESTINATION share/applications)

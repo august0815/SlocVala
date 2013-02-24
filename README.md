@@ -32,7 +32,7 @@ Now with cmake as build system see INSTALL,
 to fit in elementary 
  
 
-please do not install yet
+install on your own risk 
 
 git as version controll
 

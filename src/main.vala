@@ -21,13 +21,13 @@ using Granite;
 		construct {
 
 			program_name = "SlocVala";
-			exec_name = "sloc";
+			exec_name = "slocvala";
 			
 			app_copyright = "Mario Marcec <mario.marce42@googlmail.com> Projekt Developers";
 			app_years = "2011";
-			application_id = "apps.sloc";
-			app_icon = "sloc";
-			app_launcher = "sloc.desktop";
+			application_id = "apps.slocvala";
+			app_icon = "slocvala";
+			app_launcher = "slocvala.desktop";
 			
 			main_url = "https://github.com/august0815/SlocVala";
 			bug_url = "";

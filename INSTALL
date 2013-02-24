@@ -5,4 +5,4 @@ cmake ..
 make -j3
 
 To install it:
-make install
+(sudo) make install

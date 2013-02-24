@@ -35,9 +35,9 @@ PACKAGES
 OPTIONS
     --thread)
 
-add_executable(projekt
+add_executable(slocvala
     ${VALA_C} )
 
-target_link_libraries(projekt ${DEPS_LIBRARIES})
+target_link_libraries(slocvala ${DEPS_LIBRARIES})
 
-#install(TARGETS projekt RUNTIME DESTINATION bin)
+install(TARGETS slocvala RUNTIME DESTINATION bin)
